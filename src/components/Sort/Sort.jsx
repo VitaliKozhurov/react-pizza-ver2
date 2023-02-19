@@ -1,15 +1,15 @@
 import { useEffect, useRef, useState } from "react";
 
-const sortArr = ['популярности', 'цене', 'алфавиту'];
+const sortArr = [
+   { name: 'популярности', sortProp: 'rating' },
+   { name: 'цене', sortProp: 'price' },
+   { name: 'алфавиту', sortProp: 'title' }
+];
 
-const Sort = () => {
+const Sort = ({ type, onChangeSort }) => {
    const [isOpen, setIsOpen] = useState(false);
-   const [sortIndex, setSortIndex] = useState(0);
-   const sortName = sortArr[sortIndex];
+   const sortName = sortArr.find(el => el.sortProp === type).name;
    const sortElem = useRef();
-   const onSetSort = (ind) => {
-      setSortIndex(ind);
-   }
 
    const onClickSort = () => {
       setIsOpen(prevState => !prevState)
@@ -51,16 +51,16 @@ const Sort = () => {
             </div>
             {isOpen && <div className="sort__popup">
                <ul>
-                  {sortArr.map((el, ind) => (
+                  {sortArr.map((el) => (
                      <li
-                        key={el}
-                        className={sortIndex === ind ? 'active' : ''}
+                        key={el.name}
+                        className={type === el.sortProp ? 'active' : ''}
                         onClick={() => {
-                           onSetSort(ind);
+                           onChangeSort(el.sortProp);
                            onClickSort();
                         }}
                      >
-                        {el}
+                        {el.name}
                      </li>
                   ))}
                </ul>
