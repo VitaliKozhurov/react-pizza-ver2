@@ -6,12 +6,13 @@ const Home = () => {
    const [fetchPizzas, setPizzas] = useState([]);
    const [isLoaded, setLoad] = useState(true);
    const [categoryId, setCategoryId] = useState(0);
-   const [sortType, setSortType] = useState('rating');
+   const [sortType, setSortType] = useState('rating_asc');
+   const sortQuery = sortType.split('_');
 
    useEffect(() => {
       setLoad(true);
-      // параметр sortBy, определяет сортировку, order - порядок, asc(возрастание), desc
-      fetch(`https://63f0f6655b7cf4107e2a2f99.mockapi.io/items?${categoryId ? `category=${categoryId}` : ''}&sortBy=${sortType}&order=asc`)
+      // параметр sortBy, определяет сортировку, order - порядок, asc(возрастание), desc(убывание)
+      fetch(`https://63f0f6655b7cf4107e2a2f99.mockapi.io/items?${categoryId ? `category=${categoryId}` : ''}&sortBy=${sortQuery[0]}&order=${sortQuery[1]}`)
          .then(response => response.json())
          .then(data => {
             setPizzas(data);

@@ -1,9 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 
 const sortArr = [
-   { name: 'популярности', sortProp: 'rating' },
-   { name: 'цене', sortProp: 'price' },
-   { name: 'алфавиту', sortProp: 'title' }
+   { name: 'популярности ⬆️', sortProp: 'rating_asc' },
+   { name: 'популярности ⬇️', sortProp: 'rating_desc' },
+   { name: 'цене ⬆️', sortProp: 'price_asc' },
+   { name: 'цене ⬇️', sortProp: 'price_desc' },
+   { name: 'алфавиту ⬆️', sortProp: 'title_asc' },
+   { name: 'алфавиту ⬇️', sortProp: 'title_desc' }
 ];
 
 const Sort = ({ type, onChangeSort }) => {
