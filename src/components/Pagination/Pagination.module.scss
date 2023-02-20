@@ -1,0 +1,46 @@
+.root {
+   display: flex;
+   justify-content: center;
+   margin-top: 30px;
+   font-weight: 700;
+   font-size: 20px;
+
+
+   // Чтобы можно было обратиться к классу, который определен библиотекой используем global
+   :global {
+      .previous {
+         margin-right: 20px;
+      }
+
+      .next {
+         margin-left: 20px;
+      }
+
+      li.selected {
+         a {
+            background-color: #fe5f1e;
+            color: #fff;
+         }
+      }
+   }
+
+   li {
+      margin: 0 8px;
+
+      a {
+         padding: 5px 12px;
+         border: 1px solid #fe5f1e;
+         border-radius: 5px;
+         cursor: pointer;
+         transition: all .2s linear;
+
+         &:hover {
+            background-color: #fe5f1e;
+            color: #fff;
+         }
+      }
+
+
+   }
+
+}

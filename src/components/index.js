@@ -4,6 +4,8 @@ import PizzaBlock from "./Pizzablock/PizzaBlock";
 import Sort from "./Sort/Sort";
 import Loader from './Loader/Loader';
 import NotFoundBlock from "./NotFoundBlock/NotFoundBlock";
+import Search from "./Search/Search";
+import Pagination from "./Pagination/Pagination";
 
 export {
    Header,
@@ -11,5 +13,7 @@ export {
    Sort,
    PizzaBlock,
    Loader,
-   NotFoundBlock
+   NotFoundBlock,
+   Search,
+   Pagination
 }

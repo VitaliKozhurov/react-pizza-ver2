@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import headerLogo from '../../assets/img/pizza-logo.svg';
+import Search from '../Search/Search';
 
 const Header = () => {
    return (
@@ -52,6 +53,7 @@ const Header = () => {
                   </Link>
                </div>
             </div>
+            <Search />
          </div>
       </>
    )
