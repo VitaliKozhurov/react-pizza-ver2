@@ -1,8 +1,9 @@
 import { useState, useEffect, useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import axios from 'axios';
 import { SearchContext } from "../../App";
 import { Categories, Loader, Pagination, PizzaBlock, Sort } from "../../components";
-import { setCategoryId, setSortType } from "../../redux/slices/filterSlice";
+import { setCategoryId, setPageId, setSortType } from "../../redux/slices/filterSlice";
 
 
 const Home = () => {
@@ -13,25 +14,23 @@ const Home = () => {
    const dispatch = useDispatch();
    const categoryId = useSelector(({ filter }) => filter.categoryId);
    const sortType = useSelector(({ filter }) => filter.sort.sortType);
+   const currentPage = useSelector(({ filter }) => filter.pageId);
    const sortQuery = sortType.split('_');
 
    // Локальное состояние
    const [fetchPizzas, setPizzas] = useState([]);
    const [isLoaded, setLoad] = useState(true);
-   const [currentPage, setCurrentPage] = useState(1);
    const search = searchState ? `&search=${searchState}` : '';
 
    // Запросы на сервер
    useEffect(() => {
       setLoad(true);
       // параметр sortBy, определяет сортировку, order - порядок, asc(возрастание), desc(убывание)
-      fetch(`https://63f0f6655b7cf4107e2a2f99.mockapi.io/items?page=${currentPage}&limit=4&${categoryId ? `category=${categoryId}` : ''}&sortBy=${sortQuery[0]}&order=${sortQuery[1]}${search}`)
-         .then(response => response.json())
-         .then(data => {
+      axios.get(`https://63f0f6655b7cf4107e2a2f99.mockapi.io/items?page=${currentPage}&limit=4&${categoryId ? `category=${categoryId}` : ''}&sortBy=${sortQuery[0]}&order=${sortQuery[1]}${search}`)
+         .then(({ data }) => {
             setPizzas(data);
             setLoad(false);
          })
-         .catch(error => console.log(error));
 
       window.scrollTo(0, 0);// При возврате на главную страницу будем скролить ее вверх
    }, [categoryId, sortType, searchState, currentPage]);
@@ -49,6 +48,10 @@ const Home = () => {
       dispatch(setSortType(id))
    }
 
+   const onChangePage = (page) => {
+      dispatch(setPageId(page))
+   }
+
    return (
       <>
          <div className="container">
@@ -62,7 +65,7 @@ const Home = () => {
                   ? skeletons
                   : pizzas}
             </div>
-            <Pagination onPageChange={setCurrentPage} />
+            <Pagination onPageChange={onChangePage} />
          </div>
       </>
    )
