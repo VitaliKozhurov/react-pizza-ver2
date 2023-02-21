@@ -14,18 +14,25 @@ const Sort = ({ type, onChangeSort }) => {
    const sortName = sortArr.find(el => el.sortProp === type).name;
    const sortElem = useRef();
 
+
    const onClickSort = () => {
       setIsOpen(prevState => !prevState)
    }
 
    // Используем useRef для закрытия попапа при клике вне его.
    useEffect(() => {
-      document.body.addEventListener('click', (e) => {
+      const handleClickOutside = (e) => {
          const docElem = e.composedPath();
+         console.log('clil outside')
          if (!docElem.includes(sortElem.current)) {
             setIsOpen(false)
          }
-      })
+      }
+      // composedPath представляет массив из Dom элементов, по которым происходило всплытие события, если в этом массиве не будет popUp, значит клик произошел вне его
+      document.body.addEventListener('click', handleClickOutside);
+
+      // Чтобы обработчики не накапливались, необходимо их удалять при размонтировании компонента
+      return () => document.body.removeEventListener('click', handleClickOutside);
    }, [])
 
    return (
