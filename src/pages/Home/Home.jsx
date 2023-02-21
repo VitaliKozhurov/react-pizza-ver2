@@ -1,12 +1,16 @@
 import { useState, useEffect, useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from 'axios';
+import qs from 'qs';
 import { SearchContext } from "../../App";
 import { Categories, Loader, Pagination, PizzaBlock, Sort } from "../../components";
-import { setCategoryId, setPageId, setSortType } from "../../redux/slices/filterSlice";
+import { setCategoryId, setPageId, setSortType, setFilters } from "../../redux/slices/filterSlice";
+import { useNavigate } from "react-router-dom";
 
 
 const Home = () => {
+   const navigate = useNavigate();
+
    // Контекст
    const { searchState } = useContext(SearchContext);
 
@@ -34,6 +38,27 @@ const Home = () => {
 
       window.scrollTo(0, 0);// При возврате на главную страницу будем скролить ее вверх
    }, [categoryId, sortType, searchState, currentPage]);
+
+   useEffect(() => {
+      if (window.location.search) {
+         const params = qs.parse(window.location.search.substring(1));
+         // Сохраняем в redux параметры из строки
+         dispatch(
+            setFilters(params)
+         )
+      }
+   }, [])
+
+   useEffect(() => {
+      // Формируем строку запроса
+      const queryString = qs.stringify({
+         sortBy: sortType,
+         categoryId: categoryId,
+         currentPage: currentPage
+      });
+      // Navigate отображает в адресной строке нашу сформированную строку
+      navigate(`?${queryString}`);
+   }, [categoryId, sortType, currentPage])
 
 
    const skeletons = [...new Array(10)].map((el, ind) => <Loader key={ind} />);
@@ -65,7 +90,7 @@ const Home = () => {
                   ? skeletons
                   : pizzas}
             </div>
-            <Pagination onPageChange={onChangePage} />
+            <Pagination onPageChange={onChangePage} currentPage={currentPage} />
          </div>
       </>
    )
