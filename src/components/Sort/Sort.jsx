@@ -23,7 +23,6 @@ const Sort = ({ type, onChangeSort }) => {
    useEffect(() => {
       const handleClickOutside = (e) => {
          const docElem = e.composedPath();
-         console.log('clil outside')
          if (!docElem.includes(sortElem.current)) {
             setIsOpen(false)
          }

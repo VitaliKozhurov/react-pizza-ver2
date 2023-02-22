@@ -6,6 +6,8 @@ import Loader from './Loader/Loader';
 import NotFoundBlock from "./NotFoundBlock/NotFoundBlock";
 import Search from "./Search/Search";
 import Pagination from "./Pagination/Pagination";
+import CartItem from "./CartItem/CartItem";
+import EmptyCart from "./EmptyCart/EmptyCart";
 
 export {
    Header,
@@ -15,5 +17,7 @@ export {
    Loader,
    NotFoundBlock,
    Search,
-   Pagination
+   Pagination,
+   CartItem,
+   EmptyCart
 }
