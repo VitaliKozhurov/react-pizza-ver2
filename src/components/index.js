@@ -8,6 +8,7 @@ import Search from "./Search/Search";
 import Pagination from "./Pagination/Pagination";
 import CartItem from "./CartItem/CartItem";
 import EmptyCart from "./EmptyCart/EmptyCart";
+import ErrorStatus from "./ErrorStatus/ErrorStatus";
 
 export {
    Header,
@@ -19,5 +20,6 @@ export {
    Search,
    Pagination,
    CartItem,
-   EmptyCart
+   EmptyCart,
+   ErrorStatus
 }

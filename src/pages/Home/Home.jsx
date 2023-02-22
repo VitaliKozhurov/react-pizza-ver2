@@ -2,7 +2,7 @@ import { useState, useEffect, useContext, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import qs from 'qs';
 import { SearchContext } from "../../App";
-import { Categories, Loader, Pagination, PizzaBlock, Sort } from "../../components";
+import { Categories, ErrorStatus, Loader, Pagination, PizzaBlock, Sort } from "../../components";
 import { setCategoryId, setPageId, setSortType, setFilters } from "../../redux/slices/filterSlice";
 import { useNavigate } from "react-router-dom";
 import { fetchToPizzas } from "../../redux/slices/pizzasSlice";
@@ -93,11 +93,16 @@ const Home = () => {
                <Sort type={sortType} onChangeSort={onChangeSort} />
             </div>
             <h2 className="content__title">Все пиццы</h2>
-            <div className="content__items">
-               {status === 'loading'
-                  ? skeletons
-                  : pizzas}
-            </div>
+            {
+               status === 'error'
+                  ? <ErrorStatus />
+                  : <div className="content__items">
+                     {status === 'loading'
+                        ? skeletons
+                        : pizzas}
+                  </div>
+            }
+
             <Pagination onPageChange={onChangePage} currentPage={currentPage} />
          </div>
       </>
