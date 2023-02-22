@@ -28,6 +28,12 @@ const Home = () => {
    const [isLoaded, setLoad] = useState(true);
    const search = searchState ? `&search=${searchState}` : '';
 
+   const fetching = async () => {
+      const { data } = await axios.get(`https://63f0f6655b7cf4107e2a2f99.mockapi.io/items?page=${currentPage}&limit=4&${categoryId ? `category=${categoryId}` : ''}&sortBy=${sortQuery[0]}&order=${sortQuery[1]}${search}`);
+      setPizzas(data);
+      setLoad(false);
+   }
+
    useEffect(() => {
       if (isMounted.current) {// Формируем строку запроса
          const queryString = qs.stringify({
@@ -56,16 +62,12 @@ const Home = () => {
 
    // Запросы на сервер
    useEffect(() => {
+
       setLoad(true);
       // При первой загрузки страницы если было какое-то значение в адресной строке сначала эти значения закидываем  в стор, а со второй и когда эти значения поменяются в сторе мы будем  почылать запрос
       if (!isGetRequest.current) {
-         axios.get(`https://63f0f6655b7cf4107e2a2f99.mockapi.io/items?page=${currentPage}&limit=4&${categoryId ? `category=${categoryId}` : ''}&sortBy=${sortQuery[0]}&order=${sortQuery[1]}${search}`)
-            .then(({ data }) => {
-               setPizzas(data);
-               setLoad(false);
-            })
+         fetching();
       }
-
       isGetRequest.current = false;
 
       // параметр sortBy, определяет сортировку, order - порядок, asc(возрастание), desc(убывание)
