@@ -1,11 +1,10 @@
-import { useState, useEffect, useContext, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import qs from 'qs';
-import { SearchContext } from "../../App";
 import { Categories, ErrorStatus, Loader, Pagination, PizzaBlock, Sort } from "../../components";
-import { setCategoryId, setPageId, setSortType, setFilters } from "../../redux/slices/filterSlice";
+import { setCategoryId, setPageId, setSortType, setFilters, selectCategoryId, selectSortType, selectCurrentPage, selectorSearchValue } from "../../redux/slices/filterSlice";
 import { useNavigate } from "react-router-dom";
-import { fetchToPizzas } from "../../redux/slices/pizzasSlice";
+import { fetchToPizzas, selectPizza } from "../../redux/slices/pizzasSlice";
 
 const Home = () => {
    const navigate = useNavigate();
@@ -13,20 +12,19 @@ const Home = () => {
    const isGetRequest = useRef(false); // Создаем переменную, чтобы определять надо ли делать дефолтный запрос на сервер
    const isMounted = useRef(false); // Создаем переменную, которая будет определять первый раз смонтирована страница или нет
 
-   // Контекст
-   const { searchState } = useContext(SearchContext);
-
    // Глобальное состояние
    const dispatch = useDispatch();
-   const categoryId = useSelector(({ filter }) => filter.categoryId);
-   const sortType = useSelector(({ filter }) => filter.sort.sortType);
-   const currentPage = useSelector(({ filter }) => filter.pageId);
-   const { items, status } = useSelector((state) => state.pizza);
+   const categoryId = useSelector(selectCategoryId);
+   const sortType = useSelector(selectSortType);
+   const currentPage = useSelector(selectCurrentPage);
+   const searchValue = useSelector(selectorSearchValue);
+
+   const { items, status } = useSelector(selectPizza);
    const sortQuery = sortType.split('_');
-   const search = searchState ? `&search=${searchState}` : '';
+   const search = searchValue ? `&search=${searchValue}` : '';
 
    const getPizza = async () => {
-      const category = categoryId ? categoryId : '';
+      const category = categoryId ? `&category=${categoryId}` : '';
       const sort = sortQuery[0];
       const order = sortQuery[1];
 
@@ -66,7 +64,7 @@ const Home = () => {
       //isGetRequest.current = false;
       // параметр sortBy, определяет сортировку, order - порядок, asc(возрастание), desc(убывание)
       window.scrollTo(0, 0); // При возврате на главную страницу будем скролить ее вверх
-   }, [categoryId, sortType, searchState, currentPage]);
+   }, [categoryId, sortType, searchValue, currentPage]);
 
 
    const skeletons = [...new Array(10)].map((el, ind) => <Loader key={ind} />);

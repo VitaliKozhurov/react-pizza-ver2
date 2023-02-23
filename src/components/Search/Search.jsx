@@ -1,5 +1,6 @@
-import { useContext, useState, useRef, useCallback } from 'react';
-import { SearchContext } from '../../App';
+import { useState, useRef, useCallback } from 'react';
+import { useDispatch } from 'react-redux';
+import { setSearchValue } from '../../redux/slices/filterSlice';
 import style from './Search.module.scss';
 // Функция debounce, для отложенных действий
 const debounce = (callBack, ms) => {
@@ -14,18 +15,18 @@ const debounce = (callBack, ms) => {
 }
 
 const Search = () => {
-   const { searchState, setSearchState } = useContext(SearchContext);
+   const dispatch = useDispatch();
+
    const [inputState, setInputState] = useState('');
    const inputRef = useRef(null); // Для взаимодействия с DOM элементами
 
    const onClickClear = () => {
-      setSearchState('');
+      dispatch(setSearchValue(''));
       setInputState('');
       inputRef.current.focus();
    }
 
-
-   const update = useCallback(debounce(setSearchState, 300), []);
+   const update = useCallback(debounce((val) => dispatch(setSearchValue(val)), 300), []);
 
    const onChangeInput = (event) => {
       setInputState(event.target.value);
