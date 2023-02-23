@@ -1,0 +1,39 @@
+.root {
+   width: 580px;
+   margin: 0 auto;
+
+   h2 {
+      font-size: 28px;
+      font-weight: 800;
+      text-align: center;
+   }
+
+   img {
+      display: block;
+      width: 70%;
+      margin: 15px auto;
+   }
+
+   p {
+      font-size: 24px;
+      text-align: justify;
+      margin-bottom: 15px;
+      padding: 0 10px;
+   }
+
+   span {
+      padding-left: 25px;
+      font-size: 20px;
+      font-weight: 800;
+   }
+
+   b {
+      font-size: 20px;
+   }
+}
+
+.loading {
+   text-align: center;
+   font-size: 32px;
+   margin: 100px 0;
+}
