@@ -1,11 +1,13 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import style from './FullPizza.module.scss';
+import React from 'react';
 
-const FullPizza = () => {
+const FullPizza: React.FC = () => {
+   const [pizza, setPizza] = useState<{ imageUrl: string; title: string; price: number; }>();
    const { pizzaId } = useParams();
-   const [pizza, setPizza] = useState();
+   const navigate = useNavigate();
 
    useEffect(() => {
       const fetchData = async () => {
@@ -13,12 +15,12 @@ const FullPizza = () => {
             const { data } = await axios.get(`https://63f0f6655b7cf4107e2a2f99.mockapi.io/items/${pizzaId}`);
             setPizza(data);
          } catch (error) {
-            console.log('Ошибка при получении информации о пицце :(', error)
+            alert('Ошибка при получении информации о пицце :(')
+            navigate('/')
          }
       }
       fetchData();
    }, [])
-
    return (
       <>
          {pizza
@@ -30,7 +32,6 @@ const FullPizza = () => {
             </div>
             : <h2 className={style.loading}>Идет загрузка...</h2>
          }
-
       </>
    )
 }
