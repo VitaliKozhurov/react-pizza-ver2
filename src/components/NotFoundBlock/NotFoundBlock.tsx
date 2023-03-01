@@ -1,6 +1,7 @@
+import React from 'react';
 import style from './NotFoundBlock.module.scss';
 
-const NotFoundBlock = () => {
+const NotFoundBlock: React.FC = () => {
    return (
       <div className={style.mainText}>
          <h1 >

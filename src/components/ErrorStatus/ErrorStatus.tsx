@@ -1,4 +1,6 @@
-function ErrorStatus() {
+import React from "react";
+
+const ErrorStatus: React.FC = () => {
    return (
       <>
          <div className="container container--cart">

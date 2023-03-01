@@ -10,7 +10,7 @@ const Header = () => {
 
    const { items, totalPrice } = useSelector(selectCart);
 
-   const totalCount = items.reduce((total, curr) => total + curr.count, 0)
+   const totalCount = items.reduce((total: number, curr: any) => total + curr.count, 0)
 
    return (
       <>

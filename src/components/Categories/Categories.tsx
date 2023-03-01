@@ -1,6 +1,12 @@
-const categories = ['Все', 'Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые'];
+const categories: string[] = ['Все', 'Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые'];
 
-const Categories = ({ catId, onChangeCategory }) => {
+type CategoriesProps = {
+   catId: number;
+   onChangeCategory: any;
+}
+
+
+const Categories: React.FC<CategoriesProps> = ({ catId, onChangeCategory }) => {
    return (
       <>
          <div className="categories">

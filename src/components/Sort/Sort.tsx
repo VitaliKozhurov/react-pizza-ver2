@@ -1,19 +1,28 @@
 import { useEffect, useRef, useState } from "react";
 
-const sortArr = [
-   { name: 'популярности ⬆️', sortProp: 'rating_asc' },
-   { name: 'популярности ⬇️', sortProp: 'rating_desc' },
-   { name: 'цене ⬆️', sortProp: 'price_asc' },
-   { name: 'цене ⬇️', sortProp: 'price_desc' },
-   { name: 'алфавиту ⬆️', sortProp: 'title_asc' },
-   { name: 'алфавиту ⬇️', sortProp: 'title_desc' }
-];
+type SortItem = {
+   name: string;
+   sortProp: string;
+}
 
-const Sort = ({ type, onChangeSort }) => {
+type SortProps = {
+   type: string;
+   onChangeSort: any;
+}
+
+const Sort: React.FC<SortProps> = ({ type, onChangeSort }) => {
+   const sortArr: SortItem[] = [
+      { name: 'популярности ⬆️', sortProp: 'rating_asc' },
+      { name: 'популярности ⬇️', sortProp: 'rating_desc' },
+      { name: 'цене ⬆️', sortProp: 'price_asc' },
+      { name: 'цене ⬇️', sortProp: 'price_desc' },
+      { name: 'алфавиту ⬆️', sortProp: 'title_asc' },
+      { name: 'алфавиту ⬇️', sortProp: 'title_desc' },
+   ];
+
    const [isOpen, setIsOpen] = useState(false);
-   const sortName = sortArr.find(el => el.sortProp === type).name;
-   const sortElem = useRef();
-
+   const sortName = sortArr.find(el => el.sortProp === type)?.name; // Опциональная цепочка
+   const sortElem = useRef<HTMLDivElement>(null);
 
    const onClickSort = () => {
       setIsOpen(prevState => !prevState)
@@ -21,7 +30,7 @@ const Sort = ({ type, onChangeSort }) => {
 
    // Используем useRef для закрытия попапа при клике вне его.
    useEffect(() => {
-      const handleClickOutside = (e) => {
+      const handleClickOutside = (e: any) => {
          const docElem = e.composedPath();
          if (!docElem.includes(sortElem.current)) {
             setIsOpen(false)

@@ -3,13 +3,13 @@ import { useDispatch } from 'react-redux';
 import { setSearchValue } from '../../redux/slices/filterSlice';
 import style from './Search.module.scss';
 // Функция debounce, для отложенных действий
-const debounce = (callBack, ms) => {
-   let timeout;
-   return function (...args) {
+const debounce = (callBack: any, ms: number) => {
+   let timeout: any;
+   return function (...args: any[]) {
       clearTimeout(timeout);
 
       timeout = setTimeout(() => {
-         callBack.apply(this, args)
+         callBack(args)
       }, ms)
    }
 }
@@ -18,17 +18,17 @@ const Search = () => {
    const dispatch = useDispatch();
 
    const [inputState, setInputState] = useState('');
-   const inputRef = useRef(null); // Для взаимодействия с DOM элементами
+   const inputRef = useRef<HTMLInputElement>(null); // Для взаимодействия с DOM элементами
 
    const onClickClear = () => {
       dispatch(setSearchValue(''));
       setInputState('');
-      inputRef.current.focus();
+      inputRef.current?.focus();
    }
 
-   const update = useCallback(debounce((val) => dispatch(setSearchValue(val)), 300), []);
+   const update = useCallback(debounce((val: string) => dispatch(setSearchValue(val)), 300), []);
 
-   const onChangeInput = (event) => {
+   const onChangeInput = (event: any) => {
       setInputState(event.target.value);
       update(event.target.value);
    }
