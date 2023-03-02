@@ -2,7 +2,7 @@ const categories: string[] = ['Все', 'Мясные', 'Вегетарианс�
 
 type CategoriesProps = {
    catId: number;
-   onChangeCategory: any;
+   onChangeCategory: (ind: number) => void;
 }
 
 

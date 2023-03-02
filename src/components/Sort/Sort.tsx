@@ -10,6 +10,10 @@ type SortProps = {
    onChangeSort: any;
 }
 
+type PopupClick = React.MouseEvent<HTMLBodyElement> & {
+   path: Node[]
+};
+
 const Sort: React.FC<SortProps> = ({ type, onChangeSort }) => {
    const sortArr: SortItem[] = [
       { name: 'популярности ⬆️', sortProp: 'rating_asc' },
@@ -30,9 +34,10 @@ const Sort: React.FC<SortProps> = ({ type, onChangeSort }) => {
 
    // Используем useRef для закрытия попапа при клике вне его.
    useEffect(() => {
-      const handleClickOutside = (e: any) => {
-         const docElem = e.composedPath();
-         if (!docElem.includes(sortElem.current)) {
+      const handleClickOutside = (e: MouseEvent) => {
+         const _event = e as PopupClick;
+         const docElem = _event.composedPath();
+         if (sortElem.current && !docElem.includes(sortElem.current)) {
             setIsOpen(false)
          }
       }

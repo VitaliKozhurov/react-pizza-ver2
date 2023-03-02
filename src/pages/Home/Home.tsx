@@ -1,3 +1,4 @@
+import React from 'react';
 import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import qs from 'qs';
@@ -6,7 +7,7 @@ import { setCategoryId, setPageId, setSortType, setFilters, selectCategoryId, se
 import { useNavigate } from "react-router-dom";
 import { fetchToPizzas, selectPizza } from "../../redux/slices/pizzasSlice";
 
-const Home = () => {
+const Home: React.FC = () => {
    const navigate = useNavigate();
 
    const isGetRequest = useRef(false); // Создаем переменную, чтобы определять надо ли делать дефолтный запрос на сервер
@@ -28,7 +29,9 @@ const Home = () => {
       const sort = sortQuery[0];
       const order = sortQuery[1];
 
-      dispatch(fetchToPizzas({ currentPage, category, sort, order, search }));
+      dispatch(
+         //@ts-ignore
+         fetchToPizzas({ currentPage, category, sort, order, search }));
    }
 
    useEffect(() => {
@@ -68,18 +71,18 @@ const Home = () => {
 
 
    const skeletons = [...new Array(10)].map((el, ind) => <Loader key={ind} />);
-   const pizzas = items.map(el => (<PizzaBlock key={el.id} {...el} />));
+   const pizzas = items.map((el: any) => (<PizzaBlock key={el.id} {...el} />));
 
    // Обработчики изменения глобального стора
-   const onChangeCategory = (id) => {
+   const onChangeCategory = (id: number) => {
       dispatch(setCategoryId(id))
    }
 
-   const onChangeSort = (id) => {
+   const onChangeSort = (id: number) => {
       dispatch(setSortType(id))
    }
 
-   const onChangePage = (page) => {
+   const onChangePage = (page: number) => {
       dispatch(setPageId(page))
    }
 
@@ -100,7 +103,6 @@ const Home = () => {
                         : pizzas}
                   </div>
             }
-
             <Pagination onPageChange={onChangePage} currentPage={currentPage} />
          </div>
       </>
