@@ -10,7 +10,7 @@ type SortProps = {
    onChangeSort: any;
 }
 
-type PopupClick = React.MouseEvent<HTMLBodyElement> & {
+type PopupClick = MouseEvent & {
    path: Node[]
 };
 

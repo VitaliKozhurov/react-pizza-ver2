@@ -3,9 +3,11 @@ import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import qs from 'qs';
 import { Categories, ErrorStatus, Loader, Pagination, PizzaBlock, Sort } from "../../components";
-import { setCategoryId, setPageId, setSortType, setFilters, selectCategoryId, selectSortType, selectCurrentPage, selectorSearchValue } from "../../redux/slices/filterSlice";
+import { setCategoryId, setPageId, setSortType, setFilters, selectCategoryId, selectSortType, selectCurrentPage, selectorSearchValue, SortType } from "../../redux/slices/filterSlice";
 import { useNavigate } from "react-router-dom";
 import { fetchToPizzas, selectPizza } from "../../redux/slices/pizzasSlice";
+import { UrlParams } from '../../redux/slices/filterSlice';
+import { useAppDispatch } from '../../redux/store';
 
 const Home: React.FC = () => {
    const navigate = useNavigate();
@@ -14,7 +16,7 @@ const Home: React.FC = () => {
    const isMounted = useRef(false); // Создаем переменную, которая будет определять первый раз смонтирована страница или нет
 
    // Глобальное состояние
-   const dispatch = useDispatch();
+   const dispatch = useAppDispatch();
    const categoryId = useSelector(selectCategoryId);
    const sortType = useSelector(selectSortType);
    const currentPage = useSelector(selectCurrentPage);
@@ -38,7 +40,7 @@ const Home: React.FC = () => {
       if (isMounted.current) {// Формируем строку запроса
          const queryString = qs.stringify({
             sortBy: sortType,
-            categoryId: categoryId,
+            categoryId: categoryId > 0 ? categoryId : null,
             currentPage: currentPage
          });
          // Navigate отображает в адресной строке нашу сформированную строку
@@ -51,7 +53,7 @@ const Home: React.FC = () => {
       // В случае если имеется значение в адресной строке после знака ?
       // то эти параметры диспатчим в стор редакса
       if (window.location.search) {
-         const params = qs.parse(window.location.search.substring(1));
+         const params = (qs.parse(window.location.search.substring(1)) as unknown) as UrlParams;
          // Сохраняем в redux параметры из строки
          dispatch(
             setFilters(params)
@@ -78,7 +80,7 @@ const Home: React.FC = () => {
       dispatch(setCategoryId(id))
    }
 
-   const onChangeSort = (id: number) => {
+   const onChangeSort = (id: SortType) => {
       dispatch(setSortType(id))
    }
 
