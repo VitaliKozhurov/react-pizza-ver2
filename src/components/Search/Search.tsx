@@ -1,6 +1,6 @@
 import { useState, useRef, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
-import { setSearchValue } from '../../redux/slices/filterSlice';
+import { setSearchValue } from '../../redux/filter/slice';
 import style from './Search.module.scss';
 // Функция debounce, для отложенных действий
 const debounce = (callBack: any, ms: number) => {
@@ -62,4 +62,4 @@ const Search = () => {
    )
 }
 
-export default Search
+export default Search;

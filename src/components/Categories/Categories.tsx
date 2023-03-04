@@ -10,7 +10,7 @@ type CategoriesProps = {
 
 
 const Categories: React.FC<CategoriesProps> = React.memo(({ catId, onChangeCategory }) => {
-   useWhyDidYouUpdate('Categories', { catId, onChangeCategory })
+
    return (
       <>
          <div className="categories">

@@ -16,7 +16,7 @@ type PopupClick = MouseEvent & {
 };
 
 const Sort: React.FC<SortProps> = React.memo(({ type, onChangeSort }) => {
-   useWhyDidYouUpdate('Sort', { type, onChangeSort })
+
    const sortArr: SortItem[] = [
       { name: 'популярности ⬆️', sortProp: 'rating_asc' },
       { name: 'популярности ⬇️', sortProp: 'rating_desc' },

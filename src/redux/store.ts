@@ -1,8 +1,8 @@
 import { useDispatch } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
-import cartReducer from './slices/cartSlice';
-import filterReducer from './slices/filterSlice';
-import pizzaSlice from './slices/pizzasSlice';
+import cartReducer from './cart/slice';
+import filterReducer from './filter/slice';
+import pizzaSlice from './pizzas/slice';
 
 // Создаем store (хранилище данных приложения)
 export const store = configureStore({
