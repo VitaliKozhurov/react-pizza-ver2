@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useEffect, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import qs from 'qs';
 import { Categories, ErrorStatus, Loader, Pagination, PizzaBlock, Sort } from "../../components";
-import { setCategoryId, setPageId, setSortType, setFilters, selectCategoryId, selectSortType, selectCurrentPage, selectorSearchValue, SortType } from "../../redux/slices/filterSlice";
+import { setCategoryId, setPageId, setSortType, setFilters, selectCategoryId, selectSortType, selectCurrentPage, selectorSearchValue, SortType, sortTypeVal } from "../../redux/slices/filterSlice";
 import { useNavigate } from "react-router-dom";
 import { fetchToPizzas, selectPizza } from "../../redux/slices/pizzasSlice";
 import { UrlParams } from '../../redux/slices/filterSlice';
@@ -76,13 +76,13 @@ const Home: React.FC = () => {
    const pizzas = items.map((el: any) => (<PizzaBlock key={el.id} {...el} />));
 
    // Обработчики изменения глобального стора
-   const onChangeCategory = (id: number) => {
+   const onChangeCategory = useCallback((id: number) => {
       dispatch(setCategoryId(id))
-   }
+   }, []);
 
-   const onChangeSort = (id: SortType) => {
+   const onChangeSort = useCallback((id: sortTypeVal) => {
       dispatch(setSortType(id))
-   }
+   }, [])
 
    const onChangePage = (page: number) => {
       dispatch(setPageId(page))

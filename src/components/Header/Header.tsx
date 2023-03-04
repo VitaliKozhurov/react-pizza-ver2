@@ -64,7 +64,7 @@ const Header = () => {
                }
 
             </div>
-            <Search />
+            {location.pathname !== '/cart' && <Search />}
          </div>
       </>
    )

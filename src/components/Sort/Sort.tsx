@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-
+import React from 'react';
+import useWhyDidYouUpdate from "ahooks/lib/useWhyDidYouUpdate";
 type SortItem = {
    name: string;
    sortProp: string;
@@ -14,7 +15,8 @@ type PopupClick = MouseEvent & {
    path: Node[]
 };
 
-const Sort: React.FC<SortProps> = ({ type, onChangeSort }) => {
+const Sort: React.FC<SortProps> = React.memo(({ type, onChangeSort }) => {
+   useWhyDidYouUpdate('Sort', { type, onChangeSort })
    const sortArr: SortItem[] = [
       { name: 'популярности ⬆️', sortProp: 'rating_asc' },
       { name: 'популярности ⬇️', sortProp: 'rating_desc' },
@@ -79,6 +81,7 @@ const Sort: React.FC<SortProps> = ({ type, onChangeSort }) => {
                         key={el.name}
                         className={type === el.sortProp ? 'active' : ''}
                         onClick={() => {
+                           console.log(el.sortProp)
                            onChangeSort(el.sortProp);
                            onClickSort();
                         }}
@@ -91,6 +94,6 @@ const Sort: React.FC<SortProps> = ({ type, onChangeSort }) => {
          </div>
       </>
    )
-}
+})
 
 export default Sort;
