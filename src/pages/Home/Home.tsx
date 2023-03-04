@@ -12,10 +12,9 @@ import { setCategoryId, setFilters, setPageId, setSortType } from '../../redux/f
 import { selectPizza } from '../../redux/pizzas/selectors';
 import { fetchToPizzas } from '../../redux/pizzas/slice';
 
+
 const Home: React.FC = () => {
    const navigate = useNavigate();
-
-   const isGetRequest = useRef(false); // Создаем переменную, чтобы определять надо ли делать дефолтный запрос на сервер
    const isMounted = useRef(false); // Создаем переменную, которая будет определять первый раз смонтирована страница или нет
 
    // Глобальное состояние

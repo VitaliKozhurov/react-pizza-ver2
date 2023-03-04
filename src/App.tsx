@@ -1,10 +1,23 @@
+import { lazy, Suspense } from 'react';
+import Loadable from 'react-loadable';
 import { Routes, Route } from 'react-router-dom';
 import { Header } from './components';
-import { Home, Cart, NotFound, FullPizza } from './pages';
+import { Home } from './pages';
 import './scss/app.scss';
 
-function App() {
+const Cart = Loadable({
+  loader: () => import('./pages/Cart/Cart'),
+  loading: () => <div>Loading Cart...</div>,
+});
 
+//const Cart = lazy(() => import(/*webpackChunkName: "Cart"*/'./pages/Cart/Cart'));
+const FullPizza = lazy(() => import(/*webpackChunkName: "FullPizza"*/'./pages/FullPizza/FullPizza'));
+const NotFound = lazy(() => import(/*webpackChunkName: "NotFound"*/'./pages/Not_found/NotFound'));
+
+
+
+
+function App() {
   return (
     <>
       <div className="wrapper">
@@ -13,8 +26,16 @@ function App() {
           <Routes>
             <Route path='/' element={<Home />} />
             <Route path='/cart' element={<Cart />} />
-            <Route path='/pizza/:pizzaId' element={<FullPizza />} />
-            <Route path='*' element={<NotFound />} />
+            <Route path='/pizza/:pizzaId' element={
+              <Suspense fallback={<div>Loading pizza info...</div>}>
+                <FullPizza />
+              </Suspense>
+            } />
+            <Route path='*' element={
+              <Suspense fallback={<div>Loading...</div>}>
+                <NotFound />
+              </Suspense>
+            } />
           </Routes>
         </div>
       </div>

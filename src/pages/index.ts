@@ -1,12 +1,4 @@
-import Cart from "./Cart/Cart";
-import FullPizza from "./FullPizza/FullPizza";
-import Home from "./Home/Home";
-import NotFound from "./Not_found/NotFound";
-
-
-export {
-   Home,
-   Cart,
-   NotFound,
-   FullPizza,
-}
+export { default as Cart } from "./Cart/Cart";
+export { default as FullPizza } from "./FullPizza/FullPizza";
+export { default as Home } from "./Home/Home";
+export { default as NotFound } from "./Not_found/NotFound";

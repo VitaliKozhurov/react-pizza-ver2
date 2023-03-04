@@ -1,25 +1,11 @@
-import Categories from "./Categories/Categories";
-import Header from "./Header/Header";
-import PizzaBlock from "./Pizzablock/PizzaBlock";
-import Sort from "./Sort/Sort";
-import Loader from './Loader/Loader';
-import NotFoundBlock from "./NotFoundBlock/NotFoundBlock";
-import Search from "./Search/Search";
-import Pagination from "./Pagination/Pagination";
-import CartItem from "./CartItem/CartItem";
-import EmptyCart from "./EmptyCart/EmptyCart";
-import ErrorStatus from "./ErrorStatus/ErrorStatus";
-
-export {
-   Header,
-   Categories,
-   Sort,
-   PizzaBlock,
-   Loader,
-   NotFoundBlock,
-   Search,
-   Pagination,
-   CartItem,
-   EmptyCart,
-   ErrorStatus
-}
+export { default as Categories } from "./Categories/Categories";
+export { default as Header } from "./Header/Header";
+export { default as PizzaBlock } from "./Pizzablock/PizzaBlock";
+export { default as Sort } from "./Sort/Sort";
+export { default as Loader } from "./Loader/Loader";
+export { default as NotFoundBlock } from "./NotFoundBlock/NotFoundBlock";
+export { default as Search } from "./Search/Search";
+export { default as Pagination } from "./Pagination/Pagination";
+export { default as CartItem } from "./CartItem/CartItem";
+export { default as EmptyCart } from "./EmptyCart/EmptyCart";
+export { default as ErrorStatus } from "./ErrorStatus/ErrorStatus";

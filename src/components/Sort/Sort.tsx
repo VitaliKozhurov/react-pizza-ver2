@@ -81,7 +81,6 @@ const Sort: React.FC<SortProps> = React.memo(({ type, onChangeSort }) => {
                         key={el.name}
                         className={type === el.sortProp ? 'active' : ''}
                         onClick={() => {
-                           console.log(el.sortProp)
                            onChangeSort(el.sortProp);
                            onClickSort();
                         }}
